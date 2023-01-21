@@ -43,15 +43,48 @@ mongoose.connect("mongodb://localhost:27017/userDB", { useNewUrlParser: true });
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
+  googleId: String,
+  secret: String,
+});
+
+const userDataSchema = new mongoose.Schema({
+  email: String,
   first_name: String,
   last_name: String,
-  address : String,
-  address2 : String,
-  country : String,
-  state : String,
-  PIN : String,
-  googleId : String,
-  secret : String
+  address: String,
+  address2: String,
+  country: String,
+  state: String,
+  PIN: String,
+});
+
+const healthSchema = new mongoose.Schema({
+  username: String,
+  symptoms: String,
+  injury: String,
+  pain: String,
+  tests: String,
+  allegies: String,
+  high_cholestrol: String,
+  hbp: String,
+  heart_problem: String,
+  depression: String,
+  diabetes: String,
+  astma: String,
+  smoke: String,
+});
+
+const DoctorSchema = new mongoose.Schema({
+  email: String,
+  first_name: String,
+  last_name: String,
+  address: String,
+  Specilization: String,
+  tim: String,
+  country: String,
+  state: String,
+  PIN: String,
+  rating: String,
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -60,20 +93,23 @@ userSchema.plugin(findOrCreate);
 // mongosse Mondel **********************************************************
 
 const User = new mongoose.model("User", userSchema);
+const Userdata = new mongoose.model("Userdata", userDataSchema);
+const Doctordata = new mongoose.model("Doctordata", DoctorSchema);
+const HealthReport = new mongoose.model("HealthReport", healthSchema);
 
 passport.use(User.createStrategy());
-passport.serializeUser(function(user, cb) {
-  process.nextTick(function() {
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
     return cb(null, {
       id: user.id,
       username: user.username,
-      picture: user.picture
+      picture: user.picture,
     });
   });
 });
 
-passport.deserializeUser(function(user, cb) {
-  process.nextTick(function() {
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
     return cb(null, user);
   });
 });
@@ -124,14 +160,13 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/secrets", (req, res) => {
-  User.find({"secret" : {$ne : null}} , (err , foundUsers)=>{
-    if(err){
+  User.find({ secret: { $ne: null } }, (err, foundUsers) => {
+    if (err) {
       console.log(err);
       res.redirect("/login");
-    }
-    else{
-      if(foundUsers){
-        res.render("secrets" , {userWithSecrets : foundUsers} );
+    } else {
+      if (foundUsers) {
+        res.render("secrets", { userWithSecrets: foundUsers });
       }
     }
   });
@@ -154,33 +189,31 @@ app.get("/logout", (req, res, next) => {
   res.redirect("/");
 });
 
-// All Post Request **********************************************************
-
-app.post("/landing" , (req,res)=>{
-    const a = req.body.for_patient;
-    const b = req.body.for_doctor;
-    if(a == "on"){
-        if(req.body.rbutton == "Register"){
-            res.render("register");
-        }
-        else{
-            res.render("login");
-        }
-    }
-    else if(b == "on"){
-        if(req.body.rbutton == "Register"){
-            res.render("doctor_register");
-        }
-        else{
-            res.render("login");
-        }
-    }
-    else{
-        console.log("Not choosen")
-    }
+app.get("/healthform", (req, res) => {
+  res.render("patient_health");
 });
 
+// All Post Request **********************************************************
 
+app.post("/landing", (req, res) => {
+  const a = req.body.for_patient;
+  const b = req.body.for_doctor;
+  if (a == "on") {
+    if (req.body.rbutton == "Register") {
+      res.render("register");
+    } else {
+      res.render("login");
+    }
+  } else if (b == "on") {
+    if (req.body.rbutton == "Register") {
+      res.render("doctor_register");
+    } else {
+      res.render("login");
+    }
+  } else {
+    console.log("Not choosen");
+  }
+});
 
 app.post("/register", (req, res) => {
   User.register(
@@ -192,11 +225,46 @@ app.post("/register", (req, res) => {
         res.redirect("/register");
       } else {
         passport.authenticate("local")(req, res, function () {
-          res.redirect("/secrets");
+          res.redirect("/login");
         });
       }
     }
   );
+
+  const newUserData = new Userdata({
+    email: req.body.username,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    address: req.body.address,
+    address2: req.body.address2,
+    country: req.body.country,
+    state: req.body.state,
+    PIN: req.body.PIN,
+  });
+
+  newUserData.save(function (err) {
+    if (err) {
+      console.log("Error in savinf user data!!");
+    }
+  });
+
+  const DoctorUserData = new Doctordata({
+    email: req.body.username,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    address: req.body.address,
+    Specilization: req.body.address2,
+    tim: req.body.slot,
+    country: req.body.country,
+    state: req.body.state,
+    PIN: req.body.PIN,
+  });
+
+  DoctorUserData.save(function (err) {
+    if (err) {
+      console.log("Error in savinf user data!!");
+    }
+  });
 });
 
 app.post("/login", (req, res) => {
@@ -204,7 +272,19 @@ app.post("/login", (req, res) => {
     username: req.body.username,
     password: req.body.password,
   });
-  
+
+  var FoundedUser = "none";
+
+  Userdata.findOne({ email: req.body.username }, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        FoundedUser = foundUser;
+      }
+    }
+  });
+
   req.login(user, (err) => {
     if (err) {
       console.log(err);
@@ -213,35 +293,71 @@ app.post("/login", (req, res) => {
       passport.authenticate("local")(req, res, function () {
         const a = req.body.for_patient;
         const b = req.body.for_doctor;
-    if(a == "on"){
-        res.render("patient_dashbord");
-    }
-    else if(b == "on"){
-        res.render("doctor_dashboard");
-    }
-    else{
-        console.log("Not choosen")
-    }   
+        if (a == "on") {
+          res.render("patient_dashbord", { P_Variable: FoundedUser });
+        } else if (b == "on") {
+          res.render("doctor_dashboard", { D_Variable: FoundedUser });
+          //   console.log(FoundedUser.tim);
+        } else {
+          console.log("");
+        }
       });
     }
   });
 });
 
-app.post("/submit" , (req, res)=>{
-  const submitted_Text  = req.body.secret;
+app.post("/submit", (req, res) => {
+  const submitted_Text = req.body.secret;
   // console.log(req.user.id);
   // console.log(submitted_Text);
-  User.findById( req.user.id , (err , foundUser)=>{
-    if(err){
+  User.findById(req.user.id, (err, foundUser) => {
+    if (err) {
       console.log(err);
-    }
-    else{
-      if(foundUser){
+    } else {
+      if (foundUser) {
         foundUser.secret = submitted_Text;
-        foundUser.save(()=>{
+        foundUser.save(() => {
           res.redirect("/secrets");
         });
       }
+    }
+  });
+});
+
+app.post("/health", (req, res) => {
+  const newReport = new HealthReport({
+    username: req.body.username,
+    symptoms: req.body.symptoms,
+    injury: req.body.injury,
+    pain: req.body.pain,
+    tests: req.body.tests,
+    allegies: req.body.allergies,
+    high_cholestrol: req.body.high_cholestrol,
+    hbp: req.body.hbp,
+    heart_problem: req.body.heart_problem,
+    depression: req.body.depression,
+    diabetes: req.body.diabetes,
+    astma: req.body.astma,
+    smoke: req.body.smoke,
+  });
+
+  var FoundedUser = "none";
+
+  Userdata.findOne({ email: req.body.username }, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        FoundedUser = foundUser;
+      }
+    }
+  });
+
+  newReport.save(function (err) {
+    if (err) {
+      console.log("Error in saving user data!!");
+    } else {
+        res.render("patient_dashbord", { P_Variable: FoundedUser });
     }
   });
 });

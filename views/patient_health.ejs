@@ -1,0 +1,159 @@
+<%- include('partials/header') %>
+
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="images/doctor2.jpg" alt="" width="72" height="57">
+        <h2>PATIENT HEALTH FORM</h2>
+        <p class="lead">Kindly fill the following PATIENT HEALTH DETAILS FORM</p>
+      </div>
+  </div>
+  <div class="col-md-7 col-lg-8 mx-auto mb-3">
+    <h4 class="mb-3">Health Details</h4>
+    <form class="needs-validation" action="/health" method="post" novalidate>
+
+      <div class="col-12">
+        <label for="address" class="form-label">Email</label>
+        <input type="text" class="form-control" name="username" id="Users" placeholder="" required>
+        <div class="invalid-feedback">
+          Please enter your symptoms
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label for="address" class="form-label">SYMPTOMS</label>
+        <input type="text" class="form-control" name="symptoms" id="address" placeholder="" required>
+        <div class="invalid-feedback">
+          Please enter your symptoms
+        </div>
+      </div>
+
+
+
+      <div class="col-md-5">
+        <label for="country" class="form-label">How did injury occur</label>
+        <select class="form-select" name="injury" id="country" required>
+          <option value="">Choose...</option>
+          <option>None</option>
+          <option>Accident</option>
+          <option>Fall</option>
+          <option>Gradually</option>
+          <option>Work Injury</option>
+          <option>Lifting</option>
+          <option>sport</option>
+          <option>Other</option>
+        </select>
+        <div class="invalid-feedback">
+          Please select a valid occurence
+        </div>
+      </div>
+
+
+
+      <div class="col-md-4">
+        <label for="state" class="form-label">Do you have Pain? if yes, select the body part</label>
+        <select class="form-select" name="pain" id="state" required>
+          <option value="">Choose...</option>
+          <option>No</option>
+          <option>head</option>
+          <option>stomach</option>
+          <option>back</option>
+          <option>legs</option>
+          <option>shoulders</option>
+          <option>other</option>
+        </select>
+
+      </div>
+
+      <div class="col-md-5">
+        <label for="tests" class="form-label">What tests are already done</label>
+        <select class="form-select" name="test" id="tests" required>
+          <option value="">Choose...</option>
+          <option>CT scan</option>
+          <option>MRI</option>
+          <option>X Ray</option>
+          <option>EMG</option>
+          <option>Bone scan</option>
+          <option>Ultrasound</option>
+          <option>none</option>
+          <option>Other</option>
+        </select>
+        <div class="invalid-feedback">
+          Please select a valid test
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label for="allergy" class="form-label">List all food and medical allergies</label>
+        <input type="text" class="form-control" name="allergies" id="allergy" placeholder="" required>
+        <div class="invalid-feedback">
+          Please enter your allergies
+        </div>
+      </div>
+
+
+      <hr class="my-4">
+
+      <h4 class="mb-3">Medical History</h4>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="high_cholestrol" id="save-info">
+        <label class="form-check-label"  for="save-info">High cholestrol</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="hbp" id="save-info">
+        <label class="form-check-label" for="save-info">High blood pressure</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="heart_problem" id="save-info">
+        <label class="form-check-label" for="save-info">Heart problems</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="depression" id="save-info">
+        <label class="form-check-label" for="save-info">Anxiety/Depression</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="diabetes" id="save-info">
+        <label class="form-check-label" for="save-info">Diabetes</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="astma" id="save-info">
+        <label class="form-check-label" for="save-info">Asthma</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="smoke" id="save-info">
+        <label class="form-check-label" for="save-info">Do you smoke?</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="save-info">
+        <label class="form-check-label" for="save-info">none</label>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="save-info">
+        <label class="form-check-label" for="save-info">other</label>
+      </div>
+
+      <hr class="my-4">
+
+
+
+      <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+    </form>
+  </div>
+  </div>
+  </main>
+  </div>
+
+
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="checkout.js"></script>
+  <%- include('partials/footer') %>

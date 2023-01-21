@@ -3,7 +3,7 @@
 <div class="container mb-3">
   <main>
     <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+      <img class="d-block mx-auto mb-4" src="images/doctor2.jpg" alt="" width="72" height="57">
       <h2>Personal Details form</h2>
       <p class="lead">Kindly fill the following DOCTOR PERSONAL DETAILS FORM</p>
       <hr class="my-4">
@@ -26,7 +26,7 @@
           <div class="row g-3">
             <div class="col-sm-6">
               <label for="firstName" class="form-label">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+              <input type="text" class="form-control" id="firstName" name="first_name" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Valid first name is required.
               </div>
@@ -34,14 +34,14 @@
 
             <div class="col-sm-6">
               <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+              <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value="" required>
               <div class="invalid-feedback">
                 Valid last name is required.
               </div>
             </div>
 
             <div class="col-12">
-              <label for="mail" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+              <label for="mail" class="form-label">Email <span class="text-muted"></span></label>
               <input type="email" class="form-control" name="username" id="mail" placeholder="you@example.com">
               <div class="invalid-feedback">
                 Please enter a valid email address for appointment details.
@@ -60,21 +60,26 @@
             </div>
 
             <div class="col-12">
-              <label for="address" class="form-label">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+              <label for="address" class="form-label">Hospital Address</label>
+              <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" required>
               <div class="invalid-feedback">
                 Please enter your address.
               </div>
             </div>
 
             <div class="col-12">
-              <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+              <label for="Address2" class="form-label">Specilization</label>
+              <input type="text" class="form-control" name="address2" id="Address2" >
             </div>
+
+            <!-- <div class="col-12">
+              <label for="Address3" class="form-label">Available Time</label>
+              <input type="text" class="form-control" name="slot" id="Address3" >
+            </div> -->
 
             <div class="col-md-5">
               <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country" required>
+              <select class="form-select" name="country" id="country" required>
                 <option value="">Choose...</option>
                 <option>India</option>
               </select>
@@ -85,7 +90,7 @@
 
             <div class="col-md-4">
               <label for="state" class="form-label">State</label>
-              <select class="form-select" id="state" required>
+              <select class="form-select" name="state" id="state" required>
                 <option value="">Choose...</option>
                 <option>Haryana</option>
               </select>
@@ -95,19 +100,9 @@
             </div>
 
             <div class="col-md-3">
-              <label for="zip" class="form-label">PIN</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required>
-              <div class="invalid-feedback">
-                PIN code required.
-              </div>
+              <label for="zip" class="form-label">Available Time</label>
+              <input type="text" class="form-control" name="PIN" id="zip" placeholder="12:00A.M-00:00 A.M" required>
             </div>
-          </div>
-
-          <hr class="my-4">
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
           </div>
 
           <hr class="my-4">
