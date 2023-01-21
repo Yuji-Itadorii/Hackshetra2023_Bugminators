@@ -11,6 +11,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
+const { on } = require("events");
 const app = express();
 
 // App Uses ***********************************************
@@ -42,6 +43,13 @@ mongoose.connect("mongodb://localhost:27017/userDB", { useNewUrlParser: true });
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
+  first_name: String,
+  last_name: String,
+  address : String,
+  address2 : String,
+  country : String,
+  state : String,
+  PIN : String,
   googleId : String,
   secret : String
 });
@@ -148,6 +156,32 @@ app.get("/logout", (req, res, next) => {
 
 // All Post Request **********************************************************
 
+app.post("/landing" , (req,res)=>{
+    const a = req.body.for_patient;
+    const b = req.body.for_doctor;
+    if(a == "on"){
+        if(req.body.rbutton == "Register"){
+            res.render("register");
+        }
+        else{
+            res.render("login");
+        }
+    }
+    else if(b == "on"){
+        if(req.body.rbutton == "Register"){
+            res.render("doctor_register");
+        }
+        else{
+            res.render("login");
+        }
+    }
+    else{
+        console.log("Not choosen")
+    }
+});
+
+
+
 app.post("/register", (req, res) => {
   User.register(
     { username: req.body.username },
@@ -170,14 +204,24 @@ app.post("/login", (req, res) => {
     username: req.body.username,
     password: req.body.password,
   });
-
+  
   req.login(user, (err) => {
     if (err) {
       console.log(err);
       res.redirect("/login");
     } else {
       passport.authenticate("local")(req, res, function () {
-        res.redirect("/secrets");
+        const a = req.body.for_patient;
+        const b = req.body.for_doctor;
+    if(a == "on"){
+        res.render("patient_dashbord");
+    }
+    else if(b == "on"){
+        res.render("doctor_dashboard");
+    }
+    else{
+        console.log("Not choosen")
+    }   
       });
     }
   });

@@ -1,4 +1,24 @@
 {
+  "name": "sample_website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuji-Itadorii/Hackshetra2023_Bugminators.git"
+  },
+  "keywords": [
+    "website"
+  ],
+  "author": "Abhay , Anchal , Anshika",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuji-Itadorii/Hackshetra2023_Bugminators/issues"
+  },
+  "homepage": "https://github.com/Yuji-Itadorii/Hackshetra2023_Bugminators#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
