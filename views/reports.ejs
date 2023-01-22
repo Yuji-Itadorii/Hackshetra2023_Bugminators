@@ -6,7 +6,7 @@
     <section class="py-5 text-center container">
       <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light"><b>Available Doctor's</b></h1>
+          <h1 class="fw-light"><b>Reports Of Patients</b></h1>
         </div>
       </div>
     </section>
@@ -22,23 +22,35 @@
                 <title>Placeholder</title>
                 <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
                   dy=".3em">Thumbnail</text>
-                <image href="images/doct.jpg" width="100%" height="100%"></image>
+                <image href="images/slot.jpg" width="100%" height="100%"></image>
               </svg>
               <div class="card-body">
-                <p class="card-text"> <b>About Doctor</b> </p>
-                Doctor's name : <%=user.first_name %> <span>
-                    <%=user.last_name %>
-                  </span> </p>
-                  <p>Email : <%=user.email %>
-                  </p>
-                  <p>Hospital Address : <%=user.address %>
-                  </p>
-                  <!-- <p>Specilization : <%=user.address2 %>
-                  </p> -->
-                  <p>Country : <%=user.country %>
-                  </p>
-                  <p>State : <%=user.state %>
-                  </p>
+                <p class="card-text"> <b>Report</b> </p>
+                <p> <i> Username : <%=user.username %> </i>
+                </p>
+                <p>Symptoms : ruser.symptoms</p>
+                <p> Injury : <%= user.injury %>
+                </p>
+                <p> Pain : <%= user.pain %>
+                </p>
+                <p> Tests : <%= user.tests %>
+                </p>
+                <!-- <p> Allegies : 
+                </p> -->
+                <p> High cholestrol : <%= user.high_cholestrol%>
+                </p>
+                <p> High Blood Pressure : <%= user.hbp%>
+                </p>
+                <p> Heart Problem : <%= user.heart_problem %>
+                </p>
+                <p> Depression : <%= user.depression %>
+                </p>
+                <p> Diabetes : <%= user.diabetes %>
+                </p>
+                <p> Astma : <%= user.astma %>
+                </p>
+                <p> Smoke : <%= user.smoke %>
+                </p>
               </div>
             </div>
           </div>

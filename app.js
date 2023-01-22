@@ -222,6 +222,21 @@ app.get("/doctors", (req, res) => {
 
 });
 
+app.get("/patient_reports", (req, res) => {
+
+    HealthReport.find({ username : { $ne: null } }, (err, foundUsers) => {
+        if (err) {
+          console.log(err);
+          res.redirect("/login");
+        } else {
+          if (foundUsers) {
+            res.render("reports", { docs: foundUsers });
+          }
+        }
+      });
+
+});
+
 // All Post Request **********************************************************
 
 app.post("/landing", (req, res) => {
@@ -354,6 +369,63 @@ app.post("/submit", (req, res) => {
 });
 
 app.post("/health", (req, res) => {
+
+
+  var high_cholestrol ;
+  var hbp;
+  var heart_problem;
+  var depression;
+  var diabetes;
+  var astma;
+  var smoke;
+
+  if(req.body.high_cholestrol == "on"){
+     high_cholestrol = "YES";
+  }
+  else{
+     high_cholestrol = "NO"
+  }
+  if(req.body.hbp == "on"){
+     hbp = "YES";
+  }
+  else{
+     hbp = "NO"
+  }
+  if(req.body.heart_problem == "on"){
+     heart_problem = "YES";
+  }
+  else{
+     heart_problem = "NO"
+  }
+  if(req.body.depression == "on"){
+     depression = "YES";
+  }
+  else{
+     depression = "NO"
+  }
+  if(req.body.diabetes == "on"){
+     diabetes = "YES";
+  }
+  else{
+     diabetes = "NO"
+  }
+  if(req.body.astma == "on"){
+     astma = "YES";
+  }
+  else{
+     astma = "NO"
+  }
+  if(req.body.smoke == "on"){
+     smoke = "YES";
+  }
+  else{
+     smoke = "NO"
+  }
+  
+  
+
+
+
   const newReport = new HealthReport({
     username: req.body.username,
     symptoms: req.body.symptoms,
@@ -361,13 +433,13 @@ app.post("/health", (req, res) => {
     pain: req.body.pain,
     tests: req.body.tests,
     allegies: req.body.allergies,
-    high_cholestrol: req.body.high_cholestrol,
-    hbp: req.body.hbp,
-    heart_problem: req.body.heart_problem,
-    depression: req.body.depression,
-    diabetes: req.body.diabetes,
-    astma: req.body.astma,
-    smoke: req.body.smoke,
+    high_cholestrol: high_cholestrol,
+    hbp: hbp,
+    heart_problem: heart_problem,
+    depression: depression,
+    diabetes: diabetes,
+    astma: astma,
+    smoke: smoke,
   });
 
   var FoundedUser = "none";
