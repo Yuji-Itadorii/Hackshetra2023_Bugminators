@@ -189,23 +189,31 @@ app.get("/logout", (req, res, next) => {
 });
 
 app.get("/healthform", (req, res) => {
-  res.render("patient_health");
+
+  if(req.isAuthenticated()){
+    res.render("patient_health");
+  }
+  else{
+    res.redirect("/login");
+  }
+
+  
 });
 
 
-app.get("/reports", (req, res) => {
+// app.get("/reports", (req, res) => {
     
-    HealthReport.find({ username : { $ne: null } }, (err, foundUsers) => {
-        if (err) {
-          console.log(err);
-          res.redirect("/login");
-        } else {
-          if (foundUsers) {
-            res.send(foundUsers);
-          }
-        }
-      });
-});
+//     HealthReport.find({ username : { $ne: null } }, (err, foundUsers) => {
+//         if (err) {
+//           console.log(err);
+//           res.redirect("/login");
+//         } else {
+//           if (foundUsers) {
+//             res.send(foundUsers);
+//           }
+//         }
+//       });
+// });
 
 app.get("/doctors", (req, res) => {
 
@@ -215,7 +223,13 @@ app.get("/doctors", (req, res) => {
           res.redirect("/login");
         } else {
           if (foundUsers) {
-            res.render("doctors", { docs: foundUsers });
+            if(req.isAuthenticated()){
+              res.render("doctors", { docs: foundUsers });
+            }
+            else{
+              res.redirect("/login");
+            }
+            
           }
         }
       });
@@ -230,7 +244,13 @@ app.get("/patient_reports", (req, res) => {
           res.redirect("/login");
         } else {
           if (foundUsers) {
-            res.render("reports", { docs: foundUsers });
+            if(req.isAuthenticated()){
+              res.render("reports", { docs: foundUsers });
+            }
+            else{
+              res.redirect("/login");
+            }
+           
           }
         }
       });
