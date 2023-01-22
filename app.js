@@ -79,8 +79,7 @@ const DoctorSchema = new mongoose.Schema({
   first_name: String,
   last_name: String,
   address: String,
-  Specilization: String,
-  tim: String,
+  Specilization : String,
   country: String,
   state: String,
   PIN: String,
@@ -193,6 +192,36 @@ app.get("/healthform", (req, res) => {
   res.render("patient_health");
 });
 
+
+app.get("/reports", (req, res) => {
+    
+    HealthReport.find({ username : { $ne: null } }, (err, foundUsers) => {
+        if (err) {
+          console.log(err);
+          res.redirect("/login");
+        } else {
+          if (foundUsers) {
+            res.send(foundUsers);
+          }
+        }
+      });
+});
+
+app.get("/doctors", (req, res) => {
+
+    Doctordata.find({ email : { $ne: null } }, (err, foundUsers) => {
+        if (err) {
+          console.log(err);
+          res.redirect("/login");
+        } else {
+          if (foundUsers) {
+            res.render("doctors", { docs: foundUsers });
+          }
+        }
+      });
+
+});
+
 // All Post Request **********************************************************
 
 app.post("/landing", (req, res) => {
@@ -253,11 +282,11 @@ app.post("/register", (req, res) => {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     address: req.body.address,
-    Specilization: req.body.address2,
-    tim: req.body.slot,
+    Specilization: req.body.Specilization,
     country: req.body.country,
     state: req.body.state,
     PIN: req.body.PIN,
+    rating : "NA"
   });
 
   DoctorUserData.save(function (err) {
